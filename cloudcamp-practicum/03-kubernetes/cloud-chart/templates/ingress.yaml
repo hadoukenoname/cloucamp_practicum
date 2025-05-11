@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.ingress.name }}  
+  annotations:
+    ingress.alb.yc.io/subnets: {{ .Values.ingress.subnetID }}
+    ingress.alb.yc.io/external-ipv4-address: {{ .Values.ingress.externalIP }}
+    ingress.alb.yc.io/group-name: {{ .Values.ingress.groupName }}
+spec:  
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.service2.name }}
+                port:
+                  number: {{ .Values.service2.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.service1.name }}
+                port:
+                  number: {{ .Values.service1.port }}

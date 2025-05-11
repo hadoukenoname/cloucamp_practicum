@@ -1,0 +1,16 @@
+---
+- name: Логин в Docker Hub
+  community.docker.docker_login:
+    username: "{{ docker_hub_user }}"
+    password: "{{ docker_hub_pass }}"
+
+- name: Запустить 3 контейнера приложения
+  community.docker.docker_container:
+    name: "app{{ item }}"
+    image: "{{ image_name }}"
+    state: started
+    restart_policy: always
+    published_ports:
+      - "{{ 8000 + item }}:8000"
+  loop: [0, 1, 2]
+

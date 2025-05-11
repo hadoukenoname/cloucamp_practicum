@@ -1,0 +1,4 @@
+docker_hub_user: "hadoukenoname"
+docker_hub_pass: "{{ lookup('env', 'DOCKERHUB_PASS') }}"
+image_name: "hadoukenoname/cloud-practicum:v1"
+

@@ -1,0 +1,22 @@
+---
+- name: Установить Nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Скопировать конфигурацию Nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Перезапустить Nginx
+
+- name: Убедиться, что Nginx запущен
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+

@@ -1,0 +1,4 @@
+Для пуша образа на докер хаб использовались следующие команды:
+1) docker login -u hadoukenoname # Авторизация в докер хабе
+2) docker build -t hadoukenoname/cloud-practicum:v1 . # Билд образа под соответствующий репозиторий
+3) docker push hadoukenoname/cloud-practicum:v1 # Пуш образа в репозиторий

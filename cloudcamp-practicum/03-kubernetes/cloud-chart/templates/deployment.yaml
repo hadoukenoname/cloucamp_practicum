@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app1.name }}
+spec:
+  replicas: {{ .Values.app1.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app1.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app1.name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.app1.imagePullSecret }}
+      containers:
+        - name: {{ .Values.app1.name }}
+          image: "{{ .Values.image1.repository }}:{{ .Values.image1.tag }}"
+          ports:
+            - containerPort: {{ .Values.app1.containerPort }}
+          env:
+            - name: AUTHOR
+              value: "{{ .Values.app1.AUTHOR }}"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.app1.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.app1.containerPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app2.name }}
+spec:
+  replicas: {{ .Values.app2.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app2.name }}   
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app2.name }}
+    spec:
+      containers:
+        - name: {{ .Values.app2.name }}
+          image: "{{ .Values.image2.repository }}:{{ .Values.image2.tag }}"
+          ports:
+            - containerPort: {{ .Values.app2.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: /get
+              port: {{ .Values.app2.containerPort }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /get
+              port: {{ .Values.app2.containerPort }}
+            initialDelaySeconds: 30
+            periodSeconds: 10

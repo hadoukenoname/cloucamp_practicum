@@ -1,0 +1,12 @@
+---
+- hosts: webservers
+  become: yes
+  collections:
+    - community.docker
+  vars_files:
+    - group_vars/all.yml
+  roles:
+    - docker
+    - webapp
+    - nginx
+

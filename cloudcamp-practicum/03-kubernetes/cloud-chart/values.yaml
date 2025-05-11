@@ -1,0 +1,36 @@
+ingress:
+  name: main-ingress
+  subnetID: e9b489512lmt3pgsat5s
+  host: myhost
+  groupName: mygroup
+  externalIP: auto
+
+service1:
+  name: app1-service
+  type: NodePort
+  port: 80
+
+service2:
+  name: app2-service
+  type: NodePort
+  port: 80
+
+app1:
+  name: app1
+  replicas: 3
+  containerPort: 8000
+  imagePullSecret: mysecret
+  AUTHOR: vadim
+
+image1:
+  repository: hadoukenoname/cloud-practicum
+  tag: v1
+
+app2:
+  name: app2
+  replicas: 3
+  containerPort: 80
+
+image2:
+  repository: ealen/echo-server
+  tag: latest
